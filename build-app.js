@@ -70,7 +70,7 @@ const { IconIcns } = require("@shockpkg/icon-encoder");
   }
   if (process.env["YAAGL_NIGHTLY"]) {
     bundleId += ".nightly";
-    appDistributionName += " Nightly";
+    appDistributionName += " " + process.env["YAAGL_NIGHTLY_SUFFIX"];
   }
   await fs.writeJSON(
     path.resolve(process.cwd(), "neutralino.config.json"),

@@ -7,17 +7,20 @@ on:
 
 env:
   YAAGL_NIGHTLY: true
+  YAAGL_NIGHTLY_SUFFIX: "Nightly"
 permissions:
   contents: "write"
   packages: "write"
   pull-requests: "read"
 jobs:
-  build:
+  setup:
     runs-on: macos-latest
+    strategy:
+      matrix:
+        client: ["hk4ecn", "hk4eos", "bh3glb", "hkrpgcn", "hkrpgos", "napcn", "napos"]
+        # These are the app names (non-suffixed).
+        bundle: ["Yaagl", "Yaagl OS", "Yaagl Honkai Global", "Yaagl HSR", "Yaagl HSR OS", "Yaagl ZZZ", "Yaagl ZZZ OS"]
     steps:
-      - name: Get current date
-        id: date
-        run: echo "::set-output name=date::$(date +'%Y-%m-%d')"
 
       - name: Checkout
         uses: actions/checkout@v3
@@ -51,35 +54,25 @@ jobs:
       - name: Install dependencies
         run: pnpm install
 
+      - name: Get current date
+        id: date
+        run: echo "::set-output name=date::$(date +'%Y-%m-%d')"
+
+      - name: configure
+        env:
+          YAAGL_VERSION: ${{ steps.date.outputs.date }}-nightly
+        run: ./configure.sh
+
       - name: Build app
         env:
           YAAGL_VERSION: ${{ steps.date.outputs.date }}-nightly
-        run: |
-          ./configure.sh
-          YAAGL_CHANNEL_CLIENT=hk4ecn node ./build-app.js
-          cp dist/Yaagl/resources.neu resources_hk4ecn.neu
-          YAAGL_CHANNEL_CLIENT=hk4eos node ./build-app.js
-          cp dist/Yaagl/resources.neu resources_hk4eos.neu 
-          YAAGL_CHANNEL_CLIENT=bh3glb node ./build-app.js
-          cp dist/Yaagl/resources.neu resources_bh3glb.neu
-          YAAGL_CHANNEL_CLIENT=hkrpgcn node ./build-app.js
-          cp dist/Yaagl/resources.neu resources_hkrpgcn.neu
-          YAAGL_CHANNEL_CLIENT=hkrpgos node ./build-app.js
-          cp dist/Yaagl/resources.neu resources_hkrpgos.neu
-          YAAGL_CHANNEL_CLIENT=napcn node ./build-app.js
-          cp dist/Yaagl/resources.neu resources_napcn.neu
-          YAAGL_CHANNEL_CLIENT=napos node ./build-app.js
-          cp dist/Yaagl/resources.neu resources_napos.neu
+        run:
+          YAAGL_CHANNEL_CLIENT=${{matrix.client}} node ./build-app.js
+          cp dist/Yaagl/resources.neu resources_${{matrix.client}}.neu
 
-      - name: Tar app
-        run: |
-          tar -zcf Yaagl.app.tar.gz Yaagl.app
-          tar -zcf "Yaagl OS.app.tar.gz" "Yaagl OS.app"
-          tar -zcf "Yaagl Honkai Global.app.tar.gz" "Yaagl Honkai Global.app"
-          tar -zcf "Yaagl HSR.app.tar.gz" "Yaagl HSR.app"
-          tar -zcf "Yaagl HSR OS.app.tar.gz" "Yaagl HSR OS.app"
-          tar -zcf "Yaagl ZZZ.app.tar.gz" "Yaagl ZZZ.app"
-          tar -zcf "Yaagl ZZZ OS.app.tar.gz" "Yaagl ZZZ OS.app"
+      - name: Tar apps
+        run:
+          tar -zcf "${{ matrix.bundle }} ${{ env.YAAGL_NIGHTLY_SUFFIX }}.app.tar.gz" "${{ matrix.bundle }} ${{ env.YAAGL_NIGHTLY_SUFFIX }}.app"
       - name: Generate prerelease
         uses: "marvinpinto/action-automatic-releases@latest"
         with:
@@ -87,18 +80,6 @@ jobs:
           draft: true
           title: "${{ steps.date.outputs.date }}-nightly"
           automatic_release_tag: ${{ steps.date.outputs.date }}-nightly
-          files: |
-            Yaagl.app.tar.gz
-            Yaagl OS.app.tar.gz
-            Yaagl Honkai Global.app.tar.gz
-            Yaagl HSR.app.tar.gz
-            Yaagl HSR OS.app.tar.gz
-            Yaagl ZZZ.app.tar.gz
-            Yaagl ZZZ OS.app.tar.gz
-            resources_hk4ecn.neu
-            resources_hk4eos.neu
-            resources_bh3glb.neu
-            resources_hkrpgcn.neu
-            resources_hkrpgos.neu
-            resources_napcn.neu
-            resources_napos.neu
+          files:
+            ${{ matrix.bundle }} ${{ env.YAAGL_NIGHTLY_SUFFIX }}.app.tar.gz
+            resources_${{matrix.client}}.neu
