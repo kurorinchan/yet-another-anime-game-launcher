@@ -3,9 +3,16 @@
 This is a fork of the main repository.
 The main purpose of this is to build the client at a certain point.
 
-## Build
+## Automated Nightly Builds
 
-A "release" build is triggered when a tag is created. However (atm) there is no way to create only a tag w/o creating a release. Hence steps below create a release w/ a tag and deletes the release.
+Every day it checks whether there are new commits to the upstream. If there are, it tries to
+rebase this repo to the upstream, then starts a build.
+
+## Manual Build
+
+A "release" build is triggered when a tag is created. However (atm) there is no way to create only
+a tag on GitHub w/o creating a release.
+Hence steps below creates a release with a tag and deletes it.
 
 1. Go to release https://github.com/kurorinchan/yet-another-anime-game-launcher/releases
 2. "Draft a new release"
