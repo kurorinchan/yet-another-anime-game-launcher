@@ -1,3 +1,16 @@
+# THIS IS A FORK!!!
+
+This is a fork of the main repository.
+The main purpose of this is to build the client at a certain point.
+
+## Build
+
+1. Go to release https://github.com/kurorinchan/yet-another-anime-game-launcher/releases
+2. "Draft a new release"
+3. Create a tag name that follows X.Y.Z, all numbers. Preferrably something like 9999.Y.Z where Y and Z match those of the main repository. 9999 is a number where the main repo should never reach.
+4. Give it any name and description.
+5. Wait for it to build.
+
 # Yet another anime game launcher (Yaagl)
 
 ## Current Supported Game Version: 
