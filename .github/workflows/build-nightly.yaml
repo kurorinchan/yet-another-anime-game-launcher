@@ -4,6 +4,11 @@ on:
   schedule:
     - cron: "0 0 * * *"
   workflow_dispatch:
+    inputs:
+      fake_updates:
+        description: "Run the workflow as if there were new commits to the upstream."
+        type: boolean
+        default: false
 
 env:
   YAAGL_NIGHTLY: true
@@ -13,8 +18,41 @@ permissions:
   packages: "write"
   pull-requests: "read"
 jobs:
+  check_updates:
+    runs-on: macos-latest
+    outputs:
+      has_new_commits: ${{ steps.sync.outputs.has_new_commits }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      
+      - name: Sync upstream changes
+        id: sync
+        uses: aormsby/Fork-Sync-With-Upstream-action@v3.4.1
+        with:
+          target_sync_branch: main
+          target_repo_token: ${{ secrets.GITHUB_TOKEN }}
+          upstream_sync_repo: yaagl/yet-another-anime-game-launcher
+          upstream_sync_branch: main
+  
+          # Set test_mode true during manual dispatch to run tests instead of the true action!!
+          test_mode: ${{ inputs.sync_test_mode }}
+          
+      - name: Show value of 'has_new_commits'
+        run: echo ${{ steps.sync.outputs.has_new_commits }}
+
+      - name: New commits found
+        if: steps.sync.outputs.has_new_commits == 'true'
+        run: echo "New commits were found to sync."
+      
+      - name: No new commits
+        if: steps.sync.outputs.has_new_commits == 'false'
+        run: echo "There were no new commits."
+
   build:
     runs-on: macos-latest
+    needs: check_updates
+    if: needs.check_updates.outputs.has_new_commits == 'true' || inputs.fake_updates
     steps:
       - name: Get current date
         id: date
