@@ -56,7 +56,7 @@ jobs:
   build:
     runs-on: macos-latest
     needs: check_updates
-    if: needs.check_updates.outputs.has_new_commits == 'true' || inputs.fake_updates == 'true'
+    if: ${{ needs.check_updates.outputs.has_new_commits == 'true' || inputs.fake_updates }}
     steps:
       - name: Get current date
         id: date
