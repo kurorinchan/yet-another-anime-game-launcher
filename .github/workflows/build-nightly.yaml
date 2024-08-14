@@ -74,7 +74,7 @@ jobs:
 
       - name: Tar app
         run: |
-          tar -zcf "Yaagl ${{ env.YAAGL_NIGHTLY_SUFFIX }}.app.tar.gz" "Yaagl ${{ env.YAAGL_NIGHTLY_SUFFIX }}.app
+          tar -zcf "Yaagl ${{ env.YAAGL_NIGHTLY_SUFFIX }}.app.tar.gz" "Yaagl ${{ env.YAAGL_NIGHTLY_SUFFIX }}.app"
           tar -zcf "Yaagl OS ${{ env.YAAGL_NIGHTLY_SUFFIX }}.app.tar.gz" "Yaagl OS ${{ env.YAAGL_NIGHTLY_SUFFIX }}.app"
           tar -zcf "Yaagl Honkai Global ${{ env.YAAGL_NIGHTLY_SUFFIX }}.app.tar.gz" "Yaagl Honkai Global ${{ env.YAAGL_NIGHTLY_SUFFIX }}.app"
           tar -zcf "Yaagl HSR ${{ env.YAAGL_NIGHTLY_SUFFIX }}.app.tar.gz" "Yaagl HSR ${{ env.YAAGL_NIGHTLY_SUFFIX }}.app"
