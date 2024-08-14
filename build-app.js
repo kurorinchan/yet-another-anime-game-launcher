@@ -68,6 +68,10 @@ const { IconIcns } = require("@shockpkg/icon-encoder");
     bundleId += ".test";
     appDistributionName += " Test";
   }
+  if (process.env["YAAGL_NIGHTLY"]) {
+    bundleId += ".nightly";
+    appDistributionName += " Nightly";
+  }
   await fs.writeJSON(
     path.resolve(process.cwd(), "neutralino.config.json"),
     config
@@ -262,12 +266,12 @@ PATH_LAUNCH="$(dirname "$CONTENTS_DIR")" exec "$SCRIPT_DIR/${appname}" --path="$
         return dirent.isDirectory()
           ? getFiles(res)
           : dirent.isFile()
-          ? dirent.name.split(".").length == 1
-            ? fs.chmod(res, 0o755).then(() => {
+            ? dirent.name.split(".").length == 1
+              ? fs.chmod(res, 0o755).then(() => {
                 console.log("chmod +x " + res);
               })
-            : Promise.resolve()
-          : Promise.resolve();
+              : Promise.resolve()
+            : Promise.resolve();
       })
     );
   })(sidecarDst);
