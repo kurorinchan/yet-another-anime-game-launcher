@@ -6,7 +6,11 @@ on:
   workflow_dispatch:
     inputs:
       fake_updates:
-        description: "Run the workflow as if there were new commits to the upstream."
+        description: "Force build. Run the workflow as if there were new commits to the upstream."
+        type: boolean
+        default: false
+      sync_test_mode:
+        description: 'Fork Sync Test Mode'
         type: boolean
         default: false
 
@@ -52,7 +56,7 @@ jobs:
   build:
     runs-on: macos-latest
     needs: check_updates
-    if: needs.check_updates.outputs.has_new_commits == 'true' || inputs.fake_updates
+    if: needs.check_updates.outputs.has_new_commits == 'true' || inputs.fake_updates == 'true'
     steps:
       - name: Get current date
         id: date
