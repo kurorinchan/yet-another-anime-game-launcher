@@ -59,7 +59,7 @@ export const DXVK_FILES = [
   "dxgi.dll",
 ];
 const CURRENT_DXVK_VERSION = "1.10.4-alpha.20230402"; // there is no 1.10.4! I have to make up something greater than 1.10.3
-const CURRENT_JADEITE_VERSION = "4.0.0";
+const CURRENT_JADEITE_VERSION = "4.1.0";
 
 export async function* checkAndDownloadDXVK(aria2: Aria2): CommonUpdateProgram {
   if (
@@ -110,7 +110,7 @@ export async function* checkAndDownloadJadeite(
   await mkdirp("./jadeite");
   yield ["setStateText", "DOWNLOADING_ENVIRONMENT"];
   for await (const progress of aria2.doStreamingDownload({
-    uri: `https://codeberg.org/mkrsym1/jadeite/releases/download/v4.0.0/v4.0.0.zip`,
+    uri: `https://codeberg.org/mkrsym1/jadeite/releases/download/v4.1.0/v4.1.0.zip`,
     absDst: resolve(`./jadeite/archive.zip`),
   })) {
     yield [
@@ -142,7 +142,7 @@ const DXMT_FILES_WITH_UNIXLIB = [
   "winemetal.so",
 ];
 
-const CURRENT_DXMT_VERSION = "0.0.2";
+const CURRENT_DXMT_VERSION = "0.0.3";
 
 export async function* checkAndDownloadDXMT(aria2: Aria2): CommonUpdateProgram {
   if (
@@ -158,7 +158,7 @@ export async function* checkAndDownloadDXMT(aria2: Aria2): CommonUpdateProgram {
   yield ["setStateText", "DOWNLOADING_ENVIRONMENT"];
   for (const file of DXMT_FILES_WITH_UNIXLIB) {
     for await (const progress of aria2.doStreamingDownload({
-      uri: `https://github.com/3Shain/wine/releases/download/dxmt-0/${file}`,
+      uri: `https://github.com/3Shain/wine/releases/download/dxmt-1/${file}`,
       absDst: resolve(`./dxmt/${file}`),
     })) {
       yield [
