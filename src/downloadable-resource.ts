@@ -14,6 +14,8 @@ import {
   writeBinary,
   writeFile,
   rmrf_dangerously,
+  exec,
+  removeFile,
 } from "@utils";
 import { Wine } from "@wine";
 import { join } from "path-browserify";
@@ -140,9 +142,10 @@ const DXMT_FILES_WITH_UNIXLIB = [
   ...DXMT_FILES,
   "winemetal.dll",
   "winemetal.so",
+  "nvngx.dll",
 ];
 
-const CURRENT_DXMT_VERSION = "0.0.3";
+const CURRENT_DXMT_VERSION = "0.80.0";
 
 export async function* checkAndDownloadDXMT(aria2: Aria2): CommonUpdateProgram {
   if (
@@ -154,24 +157,48 @@ export async function* checkAndDownloadDXMT(aria2: Aria2): CommonUpdateProgram {
     return;
   }
 
+  await rmrf_dangerously(resolve(`./dxmt`));
   await mkdirp("./dxmt");
   yield ["setStateText", "DOWNLOADING_ENVIRONMENT"];
-  for (const file of DXMT_FILES_WITH_UNIXLIB) {
-    for await (const progress of aria2.doStreamingDownload({
-      uri: `https://github.com/3Shain/wine/releases/download/dxmt-1/${file}`,
-      absDst: resolve(`./dxmt/${file}`),
-    })) {
-      yield [
-        "setProgress",
-        Number((progress.completedLength * BigInt(100)) / progress.totalLength),
-      ];
-      yield [
-        "setStateText",
-        "DOWNLOADING_ENVIRONMENT_SPEED",
-        `${humanFileSize(Number(progress.downloadSpeed))}`,
-      ];
-    }
+  const archiveName = "dxmt-v0.80-builtin.tar.gz";
+  for await (const progress of aria2.doStreamingDownload({
+    uri: `https://github.com/3Shain/dxmt/releases/download/v0.80/${archiveName}`,
+    absDst: resolve(`./dxmt/${archiveName}`),
+  })) {
+    yield [
+      "setProgress",
+      Number((progress.completedLength * BigInt(100)) / progress.totalLength),
+    ];
+    yield [
+      "setStateText",
+      "DOWNLOADING_ENVIRONMENT_SPEED",
+      `${humanFileSize(Number(progress.downloadSpeed))}`,
+    ];
   }
+
+  yield ["setStateText", "EXTRACT_ENVIRONMENT"];
+  yield ["setUndeterminedProgress"];
+  await exec([
+    "tar",
+    "-xvf",
+    resolve(`./dxmt/${archiveName}`),
+    "-C",
+    resolve("./dxmt"),
+  ]);
+
+  await exec([
+    "sh",
+    "-c",
+    `mv "${resolve("./dxmt/v0.80/x86_64-windows/")}"* "${resolve("./dxmt/")}"`,
+  ]);
+  await exec([
+    "sh",
+    "-c",
+    `mv "${resolve("./dxmt/v0.80/x86_64-unix/")}"* "${resolve("./dxmt/")}"`,
+  ]);
+
+  await rmrf_dangerously(resolve(`./dxmt/v0.80`));
+  await removeFile(resolve(`./dxmt/${archiveName}`));
 
   setKey("installed_dxmt_version", CURRENT_DXMT_VERSION);
 }

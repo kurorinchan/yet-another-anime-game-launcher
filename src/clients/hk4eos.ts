@@ -20,8 +20,8 @@ import {
 } from "./secret";
 
 export const DEFAULT_WINE_DISTRO_URL =
-  "https://github.com/3Shain/wine/releases/download/v9.2-mingw/wine.tar.gz";
-export const DEFAULT_WINE_DISTRO_TAG = "v9.2-mingw";
+  "https://github.com/3Shain/wine/releases/download/v9.9-mingw/wine.tar.gz";
+export const DEFAULT_WINE_DISTRO_TAG = "9.9-dxmt";
 
 const SERVER_DEFINITION: Server = {
   id: "hk4e_global",
@@ -67,6 +67,7 @@ const SERVER_DEFINITION: Server = {
 export function createClient(options: CreateClientOptions) {
   return createHK4EChannelClient({
     server: SERVER_DEFINITION,
+    releaseType: "os",
     ...options,
   });
 }

@@ -15,18 +15,22 @@ const { IconIcns } = require("@shockpkg/icon-encoder");
   );
   let bundleId;
   let appDistributionName;
+  let includeSophon = false;
   switch (process.env["YAAGL_CHANNEL_CLIENT"]) {
     case "hk4ecn":
       bundleId = config.applicationId;
       appDistributionName = config.cli.binaryName;
+      includeSophon = true;
       break;
     case "hk4eos":
       bundleId = config.applicationId + ".os";
       appDistributionName = config.cli.binaryName + " OS";
+      includeSophon = true;
       break;
     case "hk4euniversal":
       bundleId = config.applicationId + ".uni";
       appDistributionName = config.cli.binaryName + " Uni";
+      includeSophon = true;
       break;
     case "hkrpgcn":
       bundleId = config.applicationId + ".hkrpg.cn";
@@ -254,11 +258,25 @@ PATH_LAUNCH="$(dirname "$CONTENTS_DIR")" exec "$SCRIPT_DIR/${appname}" --path="$
     `Resources`,
     `sidecar`
   );
+  // copy sophon binary to sidecar
+  if (includeSophon) {
+    await fs.copy(
+      path.resolve(process.cwd(), `sophon_server`, `build`, `server.dist`),
+      path.resolve(sidecarDst, `sophon_server`), {
+      preserveTimestamps: true,
+    });
+  }
+  // Remove potentially existing dev sophon_server from sidecar
+  await fs.remove(path.resolve(process.cwd(), `sidecar`, `sophon_server`));
   await fs.copy(path.resolve(process.cwd(), `sidecar`), sidecarDst, {
     preserveTimestamps: true,
   });
+  // Remove protonextras for hkrpg
+  if (["hkrpgcn", "hkrpgos"].includes(process.env["YAAGL_CHANNEL_CLIENT"])) {
+    await fs.remove(path.resolve(sidecarDst, "protonextras"));
+  }
 
-  (async function getFiles(dir) {
+  await (async function getFiles(dir) {
     const dirents = await fs.readdir(dir, { withFileTypes: true });
     await Promise.all(
       dirents.map(dirent => {
@@ -310,7 +328,7 @@ PATH_LAUNCH="$(dirname "$CONTENTS_DIR")" exec "$SCRIPT_DIR/${appname}" --path="$
         <key>NSHumanReadableCopyright</key>
         <string>Copyright © 2023 3Shain.</string>
         <key>LSMinimumSystemVersion</key>
-        <string>10.13.0</string>
+        <string>10.15.0</string>
         <key>NSAppTransportSecurity</key>
         <dict>
             <key>NSAllowsArbitraryLoads</key>

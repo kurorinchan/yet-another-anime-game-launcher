@@ -6,9 +6,11 @@ import { fr_FR } from "./fr_FR";
 import { ru_RU } from "./ru_RU";
 import { ko_KR } from "./ko_KR";
 import { de_DE } from "./de_DE";
+import { th_TH } from "./th_TH";
 import {
   alert as ualert,
   prompt as uprompt,
+  promptUpdate as upromptUpdate,
   formatString,
   getKey,
 } from "../utils";
@@ -24,6 +26,7 @@ export const locales = {
   ru_ru: ru_RU,
   ko_kr: ko_KR,
   de_de: de_DE,
+  th_th: th_TH,
 };
 
 export async function createLocale() {
@@ -63,6 +66,20 @@ export async function createLocale() {
     return uprompt(locale[title], formatString(locale[content], intrp));
   }
 
+  async function promptUpdate(
+    title: LocaleTextKey,
+    content: LocaleTextKey,
+    intrp: string[] = []
+  ) {
+    return upromptUpdate(
+      locale[title],
+      formatString(locale[content], intrp),
+      locale["SETTING_CANCEL"] as string,
+      locale["UPDATE_PROMPT_IGNORE"] as string,
+      locale["UPDATE_LAUNCHER"] as string
+    );
+  }
+
   function format(key: LocaleTextKey, intrp: string[]) {
     return formatString(locale[key], intrp);
   }
@@ -74,6 +91,7 @@ export async function createLocale() {
   return {
     alert,
     prompt,
+    promptUpdate,
     format,
     get,
     supportedLanguages: Object.entries(locales).map(

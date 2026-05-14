@@ -34,8 +34,8 @@ export const zh_CN = {
   GAME_DIR_CHANGED: "路径不一致",
   GAME_DIR_CHANGED_DESC:
     "似乎跟你上次设置的游戏目录不一致。本操作无效，但之后你仍可以重新设置。",
-  NEW_VERSION_AVALIABLE: "启动器有新版本可用",
-  NEW_VERSION_AVALIABLE_DESC: "你希望更新到最新{0}版本吗?\n更新内容:\n{1}",
+  NEW_VERSION_AVAILABLE: "启动器有新版本可用",
+  NEW_VERSION_AVAILABLE_DESC: "你希望更新到最新{0}版本吗?\n更新内容:\n{1}",
   DOWNLOADING_UPDATE_FILE: "正在下载更新文件",
 
   // FIXME
@@ -65,6 +65,7 @@ export const zh_CN = {
   SETTING_RETINA: "Retina 模式",
   SETTING_LEFT_CMD: "映射左 CMD 键为 CTRL 键",
   SETTING_TURN_OFF_AC_PATCH: "关闭AC补丁",
+  SETTING_CUSTOM_RESOLUTION: "自定义分辨率",
   SETTING_SAVE: "保存",
   SETTING_CANCEL: "取消",
 
@@ -82,9 +83,6 @@ export const zh_CN = {
   SETTING_OPEN_GAME_INSTALL_DIR: "打开游戏安装目录",
   SETTING_OPEN_YAAGL_DIR: "打开YAAGL数据目录",
   SETTING_YAAGL_VERSION: "YAAGL版本",
-
-  SETTING_WINE_CROSSOVER_ALERT:
-    "如果使用CrossOver，则有一个步骤必须由你手动完成。点击这个提示以获取详情。",
 
   SETTING_FPS_UNLOCK: "帧率限制解锁",
   SETTING_FPS_UNLOCK_DEFAULT: "不解锁",
@@ -105,4 +103,21 @@ export const zh_CN = {
   COMMUNITY_WARNING: "社区版警告",
   COMMUNITY_WINE_ALERT:
     "当前选择为社区版本，此版本不受官方支持，请不要报告任何问题",
+
+  SETTING_BLOCK_NET: "Launch Fix(block hosts)",
+  SETTING_TIMEOUT_FIX: "Timeout Fix",
+  SETTING_LICENSES: "Licenses", // TODO: Translate
+  SETTING_ENABLE_HDR: "启用 HDR",
+
+  SETTING_PROXY_ENABLED: "Enable HTTP Proxy", // TODO: Translate
+  SETTING_PROXY_HOST: "HTTP Proxy Host", // TODO: Translate
+  SETTING_PROXY_DESC:
+    "The proxy only applies to the game, not to the whole launcher.", // TODO: Translate
+
+  SETTING_TURN_ON_STEAM_PATCH: "Enable Steam Patch", // TODO: Translate
+
+  UPDATE_PROMPT_IGNORE: "忽略此更新",
+  SETTING_CHECK_UPDATE: "检查 YAAGL 更新",
+  ALREADY_LATEST_VERSION: "您已在使用最新版本。",
+  UPDATE_LAUNCHER: "更新启动器",
 };

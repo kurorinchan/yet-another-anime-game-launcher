@@ -1,4 +1,5 @@
 import { zh_CN } from "./zh_CN";
+import { en } from "@locale/en";
 
 export const ko_KR: typeof zh_CN = {
   CONTENT_LANG_ID: "ko-kr",
@@ -34,9 +35,9 @@ export const ko_KR: typeof zh_CN = {
   GAME_DIR_CHANGED_DESC:
     "이전에 선택한 것과 다른 경로를 선택한 것 같습니다. 이 작업은 유효하지 않지만, 나중에 다시 선택할 수 있습니다.",
 
-  NEW_VERSION_AVALIABLE: "새로운 업데이트 사용 가능",
-  NEW_VERSION_AVALIABLE_DESC:
-    "런처를 {0}버전으로 업데이트하시겠습니까? N 업데이트 내역:\n{1}",
+  NEW_VERSION_AVAILABLE: "새로운 업데이트 사용 가능",
+  NEW_VERSION_AVAILABLE_DESC:
+    "런처를 {0}버전으로 업데이트하시겠습니까?\n업데이트 내역:\n{1}",
 
   DOWNLOADING_UPDATE_FILE: "업데이트 파일 다운로드 중",
 
@@ -67,6 +68,7 @@ export const ko_KR: typeof zh_CN = {
   SETTING_RETINA: "Retina 모드",
   SETTING_LEFT_CMD: "왼쪽 CMD를 CTRL로 할당",
   SETTING_TURN_OFF_AC_PATCH: "AC 패치 비활성화",
+  SETTING_CUSTOM_RESOLUTION: "사용자 정의 해상도",
   SETTING_SAVE: "저장",
   SETTING_CANCEL: "취소",
 
@@ -85,9 +87,6 @@ export const ko_KR: typeof zh_CN = {
   SETTING_OPEN_GAME_INSTALL_DIR: "게임 설치 경로 열기",
   SETTING_OPEN_YAAGL_DIR: " YAAGL 데이터 경로 열기",
   SETTING_YAAGL_VERSION: "YAAGL 버전",
-
-  SETTING_WINE_CROSSOVER_ALERT:
-    "Crossover를 사용하려면, 수동으로 수행해야 하는 추가 작업이 있습니다. 자세한 내용을 보려면 이 버튼을 클릭하세요.",
 
   SETTING_FPS_UNLOCK: "FPS 제한 해제",
   SETTING_FPS_UNLOCK_DEFAULT: "비활성화",
@@ -110,4 +109,20 @@ export const ko_KR: typeof zh_CN = {
   COMMUNITY_WARNING: "커뮤니티 버전 경고",
   COMMUNITY_WINE_ALERT:
     "현재 커뮤니티 버전이 선택되었습니다.이 버전은 공식적으로 지원되지 않습니다. 보고하지 마십시오",
+
+  SETTING_BLOCK_NET: "게임실행 문제해결(hosts 수정)",
+  SETTING_TIMEOUT_FIX: "타임아웃 문제 해결",
+  SETTING_LICENSES: en.SETTING_LICENSES, // TODO: Translate
+  SETTING_ENABLE_HDR: "HDR 활성화",
+
+  SETTING_PROXY_ENABLED: en.SETTING_PROXY_ENABLED, // TODO: Translate
+  SETTING_PROXY_HOST: en.SETTING_PROXY_HOST, // TODO: Translate
+  SETTING_PROXY_DESC: en.SETTING_PROXY_DESC, // TODO: Translate
+
+  SETTING_TURN_ON_STEAM_PATCH: en.SETTING_TURN_ON_STEAM_PATCH, // TODO: Translate
+
+  UPDATE_PROMPT_IGNORE: "업데이트 무시",
+  SETTING_CHECK_UPDATE: "YAAGL 업데이트 확인",
+  ALREADY_LATEST_VERSION: "이미 최신 버전을 사용 중입니다.",
+  UPDATE_LAUNCHER: "런처 업데이트",
 };

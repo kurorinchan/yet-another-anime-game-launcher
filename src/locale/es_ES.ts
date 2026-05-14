@@ -37,8 +37,8 @@ export const es_ES: typeof zh_CN = {
   GAME_DIR_CHANGED_DESC:
     "Parece que ha seleccionado una ruta que difiere de la escogida anteriormente. Esta operación es inválida, pero puede seleccionar nuevamente",
 
-  NEW_VERSION_AVALIABLE: "Nueva versión disponible",
-  NEW_VERSION_AVALIABLE_DESC:
+  NEW_VERSION_AVAILABLE: "Nueva versión disponible",
+  NEW_VERSION_AVAILABLE_DESC:
     "Desea actualizar la aplicación a la versión {0}?\n Nuevos cambios:\n{1}",
 
   DOWNLOADING_UPDATE_FILE: "Descargando archivos de actualización",
@@ -71,6 +71,7 @@ export const es_ES: typeof zh_CN = {
   SETTING_RETINA: "Modo Retina",
   SETTING_LEFT_CMD: "Asignar CMD izquierdo a CTRL",
   SETTING_TURN_OFF_AC_PATCH: "Apagar el AC parche",
+  SETTING_CUSTOM_RESOLUTION: "Resolución personalizada",
   SETTING_SAVE: "Guardar",
   SETTING_CANCEL: "Cancelar",
 
@@ -89,8 +90,6 @@ export const es_ES: typeof zh_CN = {
   SETTING_OPEN_YAAGL_DIR: en.SETTING_OPEN_YAAGL_DIR,
   SETTING_YAAGL_VERSION: en.SETTING_YAAGL_VERSION,
 
-  SETTING_WINE_CROSSOVER_ALERT: en.SETTING_WINE_CROSSOVER_ALERT,
-
   SETTING_FPS_UNLOCK: en.SETTING_FPS_UNLOCK,
   SETTING_FPS_UNLOCK_DEFAULT: en.SETTING_FPS_UNLOCK_DEFAULT,
 
@@ -99,7 +98,7 @@ export const es_ES: typeof zh_CN = {
   SETTING_ADVANCED_VISIBLE: en.SETTING_ADVANCED_VISIBLE,
 
   NO_ENOUGH_DISKSPACE: en.NO_ENOUGH_DISKSPACE,
-  NO_ENOUGH_DISKSPACE_DESC: en.NEW_VERSION_AVALIABLE_DESC,
+  NO_ENOUGH_DISKSPACE_DESC: en.NEW_VERSION_AVAILABLE_DESC,
 
   UPDATE: en.UPDATE,
   GAME_VERSION_TOO_OLD_DESC: en.GAME_VERSION_TOO_OLD_DESC,
@@ -108,4 +107,22 @@ export const es_ES: typeof zh_CN = {
 
   COMMUNITY_WARNING: en.COMMUNITY_WARNING,
   COMMUNITY_WINE_ALERT: en.COMMUNITY_WINE_ALERT,
+
+  SETTING_BLOCK_NET: en.SETTING_BLOCK_NET,
+  SETTING_TIMEOUT_FIX: "Timeout Fix",
+  SETTING_LICENSES: "Licencias",
+
+  SETTING_ENABLE_HDR: "Activar HDR",
+
+  SETTING_PROXY_ENABLED: "Activar Proxy HTTP",
+  SETTING_PROXY_HOST: "Host del Proxy HTTP",
+  SETTING_PROXY_DESC:
+    "El proxy solo se aplica al juego, y no al launcher entero",
+
+  SETTING_TURN_ON_STEAM_PATCH: "Activar Parche de Steam",
+
+  UPDATE_PROMPT_IGNORE: "Ignorar actualización",
+  SETTING_CHECK_UPDATE: "Buscar actualizaciones de YAAGL",
+  ALREADY_LATEST_VERSION: "Ya estás utilizando la última versión.",
+  UPDATE_LAUNCHER: "Actualizar Launcher",
 };

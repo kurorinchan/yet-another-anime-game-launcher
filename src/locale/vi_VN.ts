@@ -37,8 +37,8 @@ export const vi_VN: typeof zh_CN = {
   GAME_DIR_CHANGED_DESC:
     "Dường như như bạn đã chọn một thư mục khác với thư mục đã được chọn trước đó. Tiến trình không hợp lệ, nhưng bạn có thể chọn lại sau",
 
-  NEW_VERSION_AVALIABLE: "Phiên bản mới khả dụng",
-  NEW_VERSION_AVALIABLE_DESC:
+  NEW_VERSION_AVAILABLE: "Phiên bản mới khả dụng",
+  NEW_VERSION_AVAILABLE_DESC:
     "Bạn có muốn cập nhật trình khởi động lên phiên bản {0} không?\n Những thứ được cập nhật:\n{1}",
 
   DOWNLOADING_UPDATE_FILE: "Đang tải tệp cập nhật",
@@ -70,6 +70,7 @@ export const vi_VN: typeof zh_CN = {
   SETTING_RETINA: "Chế độ Retina",
   SETTING_LEFT_CMD: "Ánh xạ CMD trái sang CTRL",
   SETTING_TURN_OFF_AC_PATCH: "tắt bản vá AC",
+  SETTING_CUSTOM_RESOLUTION: "Độ phân giải tùy chỉnh",
   SETTING_SAVE: "Lưu",
   SETTING_CANCEL: "Huỷ",
 
@@ -88,9 +89,6 @@ export const vi_VN: typeof zh_CN = {
   SETTING_OPEN_GAME_INSTALL_DIR: "Mở thư mục cài đặt trò chơi",
   SETTING_OPEN_YAAGL_DIR: "Mở thư mục dữ liệu của YAAGL",
   SETTING_YAAGL_VERSION: "Phiên bản YAAGL",
-
-  SETTING_WINE_CROSSOVER_ALERT:
-    "Để sử dụng CrossOver, một vài bước cần phải được tuỳ chỉnh thủ công. Nhấn vào đây để biết thêm chi tiết",
 
   SETTING_FPS_UNLOCK: "Mở khoá giới hạn FPSUnlock FPS Limit",
   SETTING_FPS_UNLOCK_DEFAULT: "Tắt",
@@ -111,4 +109,20 @@ export const vi_VN: typeof zh_CN = {
   COMMUNITY_WARNING: "Cảnh báo phiên bản cộng đồng",
   COMMUNITY_WINE_ALERT:
     "Hiện tại được chọn là phiên bản cộng đồng, phiên bản này không được hỗ trợ chính thức, vui lòng không báo cáo bất kỳ vấn đề nào",
+
+  SETTING_BLOCK_NET: "Launch Fix(block hosts)",
+  SETTING_TIMEOUT_FIX: "Timeout Fix",
+  SETTING_LICENSES: en.SETTING_LICENSES, // TODO: Translate
+  SETTING_ENABLE_HDR: "Bật HDR",
+
+  SETTING_PROXY_ENABLED: en.SETTING_PROXY_ENABLED, // TODO: Translate
+  SETTING_PROXY_HOST: en.SETTING_PROXY_HOST, // TODO: Translate
+  SETTING_PROXY_DESC: en.SETTING_PROXY_DESC, // TODO: Translate
+
+  SETTING_TURN_ON_STEAM_PATCH: en.SETTING_TURN_ON_STEAM_PATCH, // TODO: Translate
+
+  UPDATE_PROMPT_IGNORE: "Bỏ qua cập nhật",
+  SETTING_CHECK_UPDATE: "Kiểm tra cập nhật YAAGL",
+  ALREADY_LATEST_VERSION: "Bạn đang sử dụng phiên bản mới nhất.",
+  UPDATE_LAUNCHER: "Cập nhật Launcher",
 };

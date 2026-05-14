@@ -8,10 +8,11 @@ import {
   addTerminationHook,
   GLOBAL_onClose,
   setKey,
+  getKeyOrDefault,
   exit,
   rawString,
 } from "./utils";
-import { createAria2 } from "./aria2";
+import { createAria2Retry } from "./aria2";
 import {
   checkWine,
   createWine,
@@ -24,9 +25,18 @@ import "./app.css";
 import { createUpdater, downloadProgram } from "./updater";
 import { createCommonUpdateUI } from "./common-update-ui";
 import { createLocale } from "./locale";
-import { getCrossoverBinary } from "./wine/crossover";
 import { createClient } from "./clients";
-import { getWhiskyBinary } from "./wine/whisky";
+import { createSignal, Show, JSXElement } from "solid-js";
+import {
+  Modal,
+  ModalOverlay,
+  ModalContent,
+  ModalHeader,
+  ModalBody,
+  ModalFooter,
+  Button,
+  Text,
+} from "@hope-ui/solid";
 
 export async function createApp() {
   await setKey("singleton", null);
@@ -73,38 +83,49 @@ export async function createApp() {
     return true;
   });
   const aria2 = await Promise.race([
-    createAria2({ host: "127.0.0.1", port: aria2_port }),
-    timeout(10000),
-  ]).catch(() => Promise.reject(new Error("Fail to launch aria2.")));
+    createAria2Retry({ host: "127.0.0.1", port: aria2_port }),
+    timeout(15000),
+  ]).catch(() =>
+    Promise.reject(
+      new Error(
+        "Failed to start download service. Please restart the application."
+      )
+    )
+  );
   await log(`Launched aria2 version ${aria2.version.version}`);
-
-  const { latest, downloadUrl, description, version } = await createUpdater({
+  const initialUpdateCheck = await createUpdater({
     github,
     aria2,
   });
-  if (latest == false) {
-    if (
-      await locale.prompt(
-        "NEW_VERSION_AVALIABLE",
-        "NEW_VERSION_AVALIABLE_DESC",
-        [version, description]
-      )
-    ) {
-      return createCommonUpdateUI(locale, () =>
-        downloadProgram(aria2, downloadUrl)
-      );
-    }
-  }
+
+  const ignoredVersion = await getKeyOrDefault("ignore_launcher_update", "");
 
   const wineStatus = await checkWine(github);
   const prefixPath = resolve("./wineprefix"); // CHECK: hardcoded path?
+
+  let MainApp: () => JSXElement;
+
+  let showPromptSignal: (v: boolean) => void;
+  let setPendingUpdateInfoSignal: (v: any) => void;
+
+  const onCheckUpdate = async () => {
+    const result = await createUpdater({ github, aria2 });
+    if (result.latest) {
+      await locale.alert("SETTING_YAAGL_VERSION", "ALREADY_LATEST_VERSION");
+    } else {
+      if (setPendingUpdateInfoSignal && showPromptSignal) {
+        setPendingUpdateInfoSignal(result);
+        showPromptSignal(true);
+      }
+    }
+  };
 
   if (wineStatus.wineReady) {
     const wine = await createWine({
       prefix: prefixPath,
       distro: wineStatus.wineDistribution,
     });
-    return await createLauncher({
+    MainApp = await createLauncher({
       wine,
       locale,
       github,
@@ -113,13 +134,91 @@ export async function createApp() {
         aria2,
         locale,
       }),
+      onCheckUpdate,
     });
   } else {
-    return await createWineInstallProgram({
+    MainApp = await createWineInstallProgram({
       aria2,
       wineAbsPrefix: prefixPath,
       wineDistro: wineStatus.wineDistribution,
       locale,
     });
   }
+
+  return function AppRoot() {
+    const [updaterComponent, setUpdaterComponent] =
+      createSignal<() => JSXElement>();
+    const [pendingUpdateInfo, setPendingUpdateInfo] =
+      createSignal(initialUpdateCheck);
+    const [showPrompt, setShowPrompt] = createSignal(
+      initialUpdateCheck.latest == false &&
+        ignoredVersion !== initialUpdateCheck.version
+    );
+
+    showPromptSignal = setShowPrompt;
+    setPendingUpdateInfoSignal = setPendingUpdateInfo;
+
+    return (
+      <>
+        <Show when={updaterComponent()}>{updaterComponent()!()}</Show>
+        <Show when={!updaterComponent()}>
+          <MainApp />
+          <Modal opened={showPrompt()} onClose={() => setShowPrompt(false)}>
+            <ModalOverlay />
+            <ModalContent>
+              <ModalHeader>{locale.get("NEW_VERSION_AVAILABLE")}</ModalHeader>
+              <ModalBody>
+                <Text mb={"$4"} style={{ "white-space": "pre-wrap" }}>
+                  {locale.format("NEW_VERSION_AVAILABLE_DESC", [
+                    pendingUpdateInfo().version!,
+                    pendingUpdateInfo().description!,
+                  ])}
+                </Text>
+              </ModalBody>
+              <ModalFooter>
+                <Button
+                  variant="ghost"
+                  colorScheme="danger"
+                  mr="$3"
+                  onClick={async () => {
+                    await setKey(
+                      "ignore_launcher_update",
+                      pendingUpdateInfo().version!
+                    );
+                    setShowPrompt(false);
+                  }}
+                >
+                  {locale.get("UPDATE_PROMPT_IGNORE")}
+                </Button>
+                <Button
+                  variant="ghost"
+                  mr="$3"
+                  onClick={() => setShowPrompt(false)}
+                >
+                  {locale.get("SETTING_CANCEL")}
+                </Button>
+                <Button
+                  onClick={() => {
+                    const info = pendingUpdateInfo();
+                    setUpdaterComponent(() =>
+                      createCommonUpdateUI(locale, () =>
+                        downloadProgram(
+                          aria2,
+                          info.downloadUrl!,
+                          info.sidecarDownloadUrl
+                        )
+                      )
+                    );
+                    setShowPrompt(false);
+                  }}
+                >
+                  {locale.get("UPDATE_LAUNCHER")}
+                </Button>
+              </ModalFooter>
+            </ModalContent>
+          </Modal>
+        </Show>
+      </>
+    );
+  };
 }

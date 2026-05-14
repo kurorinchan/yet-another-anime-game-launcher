@@ -1,16 +1,18 @@
 import { FormControl, FormLabel, Box, Checkbox } from "@hope-ui/solid";
 import { createEffect, createSignal } from "solid-js";
-import { Locale } from "../locale";
-import { assertValueDefined, getKey, setKey } from "../utils";
-import { Config, NOOP } from "./config-def";
+import { Locale } from "@locale";
+import { assertValueDefined, getKey, setKey } from "@utils";
+import { Config, NOOP } from "@config/config-def";
 
-declare module "./config-def" {
+declare module "@config/config-def" {
   interface Config {
-    dxvkAsync: boolean;
+    blockNet: boolean;
   }
 }
 
-export async function createDxvkAsyncConfig({
+const CONFIG_KEY = "config_block_net";
+
+export default async function ({
   locale,
   config,
 }: {
@@ -18,22 +20,22 @@ export async function createDxvkAsyncConfig({
   locale: Locale;
 }) {
   try {
-    config.dxvkAsync = (await getKey("config_dxvkAsync")) == "true";
+    config.blockNet = (await getKey(CONFIG_KEY)) == "true";
   } catch {
-    config.dxvkAsync = true; // default value
+    config.blockNet = false; // default value
   }
 
-  const [value, setValue] = createSignal(config.dxvkAsync);
+  const [value, setValue] = createSignal(config.blockNet);
 
   async function onSave(apply: boolean) {
-    assertValueDefined(config.dxvkAsync);
+    assertValueDefined(config.blockNet);
     if (!apply) {
-      setValue(config.dxvkAsync);
+      setValue(config.blockNet);
       return NOOP;
     }
-    if (config.dxvkAsync == value()) return NOOP;
-    config.dxvkAsync = value();
-    await setKey("config_dxvkAsync", config.dxvkAsync ? "true" : "false");
+    if (config.blockNet == value()) return NOOP;
+    config.blockNet = value();
+    await setKey(CONFIG_KEY, config.blockNet ? "true" : "false");
     return NOOP;
   }
 
@@ -45,8 +47,8 @@ export async function createDxvkAsyncConfig({
   return [
     function UI() {
       return (
-        <FormControl id="dvxkAsync">
-          <FormLabel>{locale.get("SETTING_ASYNC_DXVK")}</FormLabel>
+        <FormControl id="blockNet">
+          <FormLabel>{locale.get("SETTING_BLOCK_NET")}</FormLabel>
           <Box>
             <Checkbox
               checked={value()}

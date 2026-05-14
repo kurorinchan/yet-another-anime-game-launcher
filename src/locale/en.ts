@@ -35,8 +35,8 @@ export const en: typeof zh_CN = {
   GAME_DIR_CHANGED_DESC:
     "You have changed your game path. This operation is unsupported, but you can adjust this later.",
 
-  NEW_VERSION_AVALIABLE: "A new update is avaliable",
-  NEW_VERSION_AVALIABLE_DESC:
+  NEW_VERSION_AVAILABLE: "A new update is available",
+  NEW_VERSION_AVAILABLE_DESC:
     "Would you like to update launcher to version {0}?\n Changes:\n{1}",
 
   DOWNLOADING_UPDATE_FILE: "Downloading update files",
@@ -68,6 +68,7 @@ export const en: typeof zh_CN = {
   SETTING_RETINA: "Retina Mode",
   SETTING_LEFT_CMD: "Map left CMD to CTRL",
   SETTING_TURN_OFF_AC_PATCH: "Turn off the AC patch",
+  SETTING_CUSTOM_RESOLUTION: "Custom resolution",
   SETTING_SAVE: "Save",
   SETTING_CANCEL: "Cancel",
 
@@ -85,9 +86,6 @@ export const en: typeof zh_CN = {
   SETTING_OPEN_GAME_INSTALL_DIR: "Open Game Install Directory",
   SETTING_OPEN_YAAGL_DIR: "Open YAAGL Data Directory",
   SETTING_YAAGL_VERSION: "YAAGL Version",
-
-  SETTING_WINE_CROSSOVER_ALERT:
-    "To use Crossover, there is an additional manual step. Click here to learn more.",
 
   SETTING_FPS_UNLOCK: "Unlock FPS Limit",
   SETTING_FPS_UNLOCK_DEFAULT: "Disabled",
@@ -110,4 +108,21 @@ export const en: typeof zh_CN = {
   COMMUNITY_WARNING: "Community Warning",
   COMMUNITY_WINE_ALERT:
     "The current selection is the Community version, this version is not officially supported, please do not report any issues",
+
+  SETTING_BLOCK_NET: "Launch Fix(block hosts)",
+  SETTING_TIMEOUT_FIX: "Timeout Fix",
+  SETTING_LICENSES: "Licenses",
+  SETTING_ENABLE_HDR: "Enable HDR",
+
+  SETTING_PROXY_ENABLED: "Enable HTTP Proxy",
+  SETTING_PROXY_HOST: "HTTP Proxy Host",
+  SETTING_PROXY_DESC:
+    "The proxy only applies to the game, not to the whole launcher.",
+
+  SETTING_TURN_ON_STEAM_PATCH: "Enable Steam Patch",
+
+  UPDATE_PROMPT_IGNORE: "Ignore Update",
+  SETTING_CHECK_UPDATE: "Check for YAAGL Updates",
+  ALREADY_LATEST_VERSION: "You are already using the latest version.",
+  UPDATE_LAUNCHER: "Update Launcher",
 };

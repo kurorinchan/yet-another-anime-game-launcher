@@ -1,4 +1,5 @@
 import { zh_CN } from "./zh_CN";
+import { en } from "@locale/en";
 
 export const fr_FR: typeof zh_CN = {
   CONTENT_LANG_ID: "fr-fr",
@@ -37,8 +38,8 @@ export const fr_FR: typeof zh_CN = {
   GAME_DIR_CHANGED_DESC:
     "Vous avez modifié le chemin d’accès de votre jeu. Cette opération n’est pas prise en charge, mais vous pouvez modifier cela plus tard.",
 
-  NEW_VERSION_AVALIABLE: "Une nouvelle mise à jour est disponible",
-  NEW_VERSION_AVALIABLE_DESC:
+  NEW_VERSION_AVAILABLE: "Une nouvelle mise à jour est disponible",
+  NEW_VERSION_AVAILABLE_DESC:
     "Voulez-vous mettre à jour le lanceur vers la version {0}?\n Changements:\n{1}",
 
   DOWNLOADING_UPDATE_FILE: "Téléchargement des fichiers de mise à jour",
@@ -70,6 +71,7 @@ export const fr_FR: typeof zh_CN = {
   SETTING_RETINA: "Mode Retina",
   SETTING_LEFT_CMD: "Mapper CMD gauche à CTRL",
   SETTING_TURN_OFF_AC_PATCH: "Désactiver le patch AC",
+  SETTING_CUSTOM_RESOLUTION: "Résolution personnalisée",
   SETTING_SAVE: "Sauvegarder",
   SETTING_CANCEL: "Annuler",
 
@@ -88,9 +90,6 @@ export const fr_FR: typeof zh_CN = {
   SETTING_OPEN_GAME_INSTALL_DIR: "Ouvrir le répertoire d’installation du jeu",
   SETTING_OPEN_YAAGL_DIR: "Ouvrir le répertoire de données de YAAGL",
   SETTING_YAAGL_VERSION: "Version de YAAGL",
-
-  SETTING_WINE_CROSSOVER_ALERT:
-    "Pour utiliser Crossover, il y a une étape manuelle supplémentaire. Cliquez ici pour en savoir plus.",
 
   SETTING_FPS_UNLOCK: "Déverrouiller la limite de FPS",
   SETTING_FPS_UNLOCK_DEFAULT: "Désactivée",
@@ -114,4 +113,20 @@ export const fr_FR: typeof zh_CN = {
   COMMUNITY_WARNING: "Avertissement Communautaire",
   COMMUNITY_WINE_ALERT:
     "La sélection actuelle est la version communautaire, cette version n’est pas officiellement prise en charge, veuillez ne pas signaler de problèmes",
+
+  SETTING_BLOCK_NET: "Launch Fix(block hosts)",
+  SETTING_TIMEOUT_FIX: "Timeout Fix",
+  SETTING_LICENSES: en.SETTING_LICENSES, // TODO: Translate
+  SETTING_ENABLE_HDR: "Activer le HDR",
+
+  SETTING_PROXY_ENABLED: en.SETTING_PROXY_ENABLED, // TODO: Translate
+  SETTING_PROXY_HOST: en.SETTING_PROXY_HOST, // TODO: Translate
+  SETTING_PROXY_DESC: en.SETTING_PROXY_DESC, // TODO: Translate
+
+  SETTING_TURN_ON_STEAM_PATCH: en.SETTING_TURN_ON_STEAM_PATCH, // TODO: Translate
+
+  UPDATE_PROMPT_IGNORE: "Ignorer la mise à jour",
+  SETTING_CHECK_UPDATE: "Rechercher des mises à jour YAAGL",
+  ALREADY_LATEST_VERSION: "Vous utilisez déjà la dernière version.",
+  UPDATE_LAUNCHER: "Mettre à jour le lanceur",
 };

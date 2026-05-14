@@ -35,8 +35,8 @@ export const ru_RU: typeof zh_CN = {
   GAME_DIR_CHANGED_DESC:
     "Похоже, вы выбрали другой путь, который отличается от ранее выбранного. Эта операция недопустима, но вы можете выбрать ее позже",
 
-  NEW_VERSION_AVALIABLE: "Доступна новая версия",
-  NEW_VERSION_AVALIABLE_DESC:
+  NEW_VERSION_AVAILABLE: "Доступна новая версия",
+  NEW_VERSION_AVAILABLE_DESC:
     "Хотите ли вы обновить лаунчер до версии {0}?\n Что обновлено:\n{1}",
 
   DOWNLOADING_UPDATE_FILE: "Загрузка файлов обновлений",
@@ -68,6 +68,7 @@ export const ru_RU: typeof zh_CN = {
   SETTING_RETINA: "Режим Retina",
   SETTING_LEFT_CMD: "Сопоставить левый CMD с CTRL",
   SETTING_TURN_OFF_AC_PATCH: "выключи патч AC",
+  SETTING_CUSTOM_RESOLUTION: "Пользовательское разрешение",
   SETTING_SAVE: "Сохранить",
   SETTING_CANCEL: "Отменить",
 
@@ -85,9 +86,6 @@ export const ru_RU: typeof zh_CN = {
   SETTING_OPEN_GAME_INSTALL_DIR: "Открыть каталог установки игры",
   SETTING_OPEN_YAAGL_DIR: "Откройте каталог данных YAAGL",
   SETTING_YAAGL_VERSION: "Версия YAAGL",
-
-  SETTING_WINE_CROSSOVER_ALERT:
-    "Чтобы использовать CrossOver, существует дополнительный шаг, который необходимо выполнить вручную. Нажмите на это поле, чтобы ознакомиться с подробностями.",
 
   SETTING_FPS_UNLOCK: "Разблокируйте FPS лимит",
   SETTING_FPS_UNLOCK_DEFAULT: "Выключено",
@@ -110,4 +108,21 @@ export const ru_RU: typeof zh_CN = {
   COMMUNITY_WARNING: "Предупреждение сообщества",
   COMMUNITY_WINE_ALERT:
     "В настоящее время выбрана версия сообщества, эта версия официально не поддерживается, не сообщайте о каких - либо проблемах",
+
+  SETTING_BLOCK_NET: "Launch Fix(block hosts)",
+  SETTING_TIMEOUT_FIX: "Timeout Fix",
+  SETTING_LICENSES: en.SETTING_LICENSES, // TODO: Translate
+
+  SETTING_ENABLE_HDR: "Включить HDR",
+
+  SETTING_PROXY_ENABLED: en.SETTING_PROXY_ENABLED, // TODO: Translate
+  SETTING_PROXY_HOST: en.SETTING_PROXY_HOST, // TODO: Translate
+  SETTING_PROXY_DESC: en.SETTING_PROXY_DESC, // TODO: Translate
+
+  SETTING_TURN_ON_STEAM_PATCH: en.SETTING_TURN_ON_STEAM_PATCH, // TODO: Translate
+
+  UPDATE_PROMPT_IGNORE: "Пропустить обновление",
+  SETTING_CHECK_UPDATE: "Проверить обновления YAAGL",
+  ALREADY_LATEST_VERSION: "Вы уже используете последнюю версию.",
+  UPDATE_LAUNCHER: "Обновить лаунчер",
 };

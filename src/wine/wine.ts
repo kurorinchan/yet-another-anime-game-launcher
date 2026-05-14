@@ -14,18 +14,12 @@ import {
 } from "@utils";
 import { dirname, join } from "path-browserify";
 import { WineDistribution } from "./distro";
-import { getCrossoverBinary } from "./crossover";
-import { getWhiskyBinary } from "./whisky";
 
 export async function createWine(options: {
   prefix: string;
   distro: WineDistribution;
 }) {
-  const loaderBin = options.distro.attributes.crossover
-    ? await getCrossoverBinary()
-    : options.distro.attributes.whisky
-    ? await getWhiskyBinary()
-    : await getCorrectWineBinary();
+  const loaderBin = await getCorrectWineBinary();
 
   async function cmd(command: string, args: string[]) {
     return await exec("cmd", [command, ...args]);
@@ -142,6 +136,23 @@ reg add "HKEY_CURRENT_USER\\Software\\Wine\\Mac Driver" /v LeftCommandIsCtrl /t 
     await waitUntilServerOff();
   }
 
+  async function setNVExtension() {
+    const cmd = `@echo off
+cd "%~dp0"
+reg add "HKEY_LOCAL_MACHINE\\SOFTWARE\\NVIDIA Corporation\\Global" /v "{41FCC608-8496-4DEF-B43E-7D9BD675A6FF}" /t REG_BINARY /d 1 /f
+reg add "HKEY_LOCAL_MACHINE\\SYSTEM\\ControlSet001\\Services\\nvlddmkm" /v "{41FCC608-8496-4DEF-B43E-7D9BD675A6FF}" /t REG_BINARY /d 1 /f
+reg add "HKEY_LOCAL_MACHINE\\SOFTWARE\\NVIDIA Corporation\\Global\\NGXCore" /v FullPath /t REG_SZ /d "C:\\Windows\\System32" /f
+`;
+    await writeFile(resolve("winedrv_config.bat"), cmd);
+    await exec(
+      "cmd",
+      ["/c", `${toWinePath(resolve("./winedrv_config.bat"))}`],
+      {},
+      "/dev/null"
+    );
+    await waitUntilServerOff();
+  }
+
   return {
     exec,
     exec2,
@@ -151,6 +162,7 @@ reg add "HKEY_CURRENT_USER\\Software\\Wine\\Mac Driver" /v LeftCommandIsCtrl /t 
     prefix: options.prefix,
     openCmdWindow,
     setProps,
+    setNVExtension,
     attributes: {
       ...options.distro.attributes,
     },

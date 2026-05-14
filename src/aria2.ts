@@ -1,5 +1,5 @@
 import { WebSocket as RPC } from "libaria2-ts";
-import { log, sha256_16, wait } from "./utils";
+import { log, sha256_16, wait, timeout } from "./utils";
 
 export async function createAria2({
   host,
@@ -13,7 +13,7 @@ export async function createAria2({
     host,
     port,
   });
-  const version = await rpc.getVersion();
+  const version = await Promise.race([rpc.getVersion(), timeout(3000)]);
 
   function shutdown() {
     return rpc.shutdown();
@@ -73,3 +73,20 @@ export async function createAria2({
 export type Aria2 = ReturnType<typeof createAria2> extends Promise<infer T>
   ? T
   : never;
+
+export async function createAria2Retry({
+  host,
+  port,
+}: {
+  host: string;
+  port: number;
+}): Promise<Aria2> {
+  for (let i = 0; i < 30; i++) {
+    try {
+      return await createAria2({ host, port });
+    } catch (e) {
+      await log("Fail to create aria2 rpc, retrying... " + e);
+    }
+  }
+  throw new Error("Fail to create aria2 rpc");
+}
